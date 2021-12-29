@@ -40,3 +40,4 @@ THEN I am able to view comments but I am prompted to log in again before I can a
 5. views
 6. controllers (routes)
 7. utils (authentication. who is logged in)
+8. public (css, event listeners etc.)
