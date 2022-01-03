@@ -1,0 +1,14 @@
+      <div class="d-flex justify-content-center my-5">
+            <h2>Your Posts</h2>
+        </div>
+
+{{#each posts as |post|}}
+    {{> postinfo post}}
+
+        <div class="d-flex justify-content-center">
+            <a href="/editpost/{{post.id}}">
+            <button type="button" class="btn btn-info" id="editBtn">Edit</button>
+            </a>
+
+        </div>
+    {{/each}}

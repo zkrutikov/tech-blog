@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
             include: [User],
         });
         console.log (data);
+        // creating a clean array off of the data variable array
         const posts = data.map((post) => {
             // converting every item in the data array into a workable object
             plain: true;
