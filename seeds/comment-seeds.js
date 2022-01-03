@@ -9,7 +9,12 @@ const commentData = [
     {
         user_id: 2,
         post_id: 2,
-        comment_content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        comment_content: "Excepteur sint occaecat cupidatat non proident"
+    },
+    {
+        user_id: 3,
+        post_id: 1,
+        comment_content: "Sunt in culpa qui officia deserunt mollit anim id est laborum."
     }
 ]
 
