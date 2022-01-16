@@ -42,50 +42,66 @@ router.get('/', withAuth, (req, res) => {
       });
   });
 
-  router.get('/edit/:id', withAuth, (req, res) => {
-    Post.findOne({
-      where: {
-        id: req.params.id
-      },
-      attributes: [
-        'id',
-        'title',
-        'date_created',
-        'content'
-      ],
-      include: [
-        {
-          model: Comment,
-          attributes: ['id', 'comment_content', 'post_id', 'user_id', 'date_created'],
-          include: {
-            model: User,
-            attributes: ['username']
-          }
-        },
-        {
-          model: User,
-          attributes: ['username']
-        }
-      ]
-    })
-      .then(dbPostData => {
-        if (!dbPostData) {
-          res.status(404).json({ message: 'No post found with this id' });
-          return;
-        }
+  router.get('/edit/:id', withAuth, async(req, res) => {
+    try {
+      const postData = await Post.findByPk(req.params.id);
   
-        // serialize the data
-        const post = dbPostData.get({ plain: true });
+      if (postData) {
+        const post = postData.get({ plain: true });
+  
+        res.render('edit-post', {
+          layout: 'dashboard',
+          post,
+        });
+      } else {
+        res.status(404).end();
+      }
+    } catch (err) {
+      res.redirect('login');
+    }
+    // Post.findOne({
+    //   where: {
+    //     id: req.params.id
+    //   },
+    //   attributes: [
+    //     'id',
+    //     'title',
+    //     'date_created',
+    //     'content'
+    //   ],
+    //   include: [
+    //     {
+    //       model: Comment,
+    //       attributes: ['id', 'comment_content', 'post_id', 'user_id', 'date_created'],
+    //       include: {
+    //         model: User,
+    //         attributes: ['username']
+    //       }
+    //     },
+    //     {
+    //       model: User,
+    //       attributes: ['username']
+    //     }
+    //   ]
+    // })
+    //   .then(dbPostData => {
+    //     if (!dbPostData) {
+    //       res.status(404).json({ message: 'No post found with this id' });
+    //       return;
+    //     }
+  
+    //     // serialize the data
+    //     const post = dbPostData.get({ plain: true });
 
-        res.render('editpost', {
-            post,
-            loggedIn: true
-            });
-      })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+    //     res.render('editpost', {
+    //         post,
+    //         loggedIn: true
+    //         });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     res.status(500).json(err);
+    //   });
 });
 
 router.get('/create/', withAuth, (req, res) => {
